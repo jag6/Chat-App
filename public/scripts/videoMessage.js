@@ -1,16 +1,37 @@
 window.addEventListener('load', () => {
     const socket = io('/');
 
-    //video
+    //peerjs --port 3001
     const myPeer = new Peer(undefined, {
         host: '/',
         port: '3001'
-        //peerjs --port 3001
     });
     const videoGrid = document.getElementById('video-grid');
     const myVideo = document.createElement('video');
     myVideo.muted = true;
     const peers = {};
+
+    //add and append video, both yours and others
+    const addVideoStream = (video, stream) => {
+        video.srcObject = stream;
+        video.addEventListener('loadedmetadata', () => {
+            video.play();
+        });
+        videoGrid.append(video);
+    };
+
+    //connect to new user(s)
+    const connectToNewUser = (userId, stream) => {
+        const call = myPeer.call(userId, stream);
+        const video = document.createElement('video');
+        call.on('stream', (userVideoStream) => {
+            addVideoStream(video, userVideoStream);
+        });
+        call.on('close', () => {
+            video.remove();
+        });
+        peers[userId] = call;
+    };
 
     navigator.mediaDevices.getUserMedia({
         video: true,
@@ -43,28 +64,17 @@ window.addEventListener('load', () => {
         socket.emit('join-room', ROOM_ID, id)
     });
 
-    const connectToNewUser = (userId, stream) => {
-        const call = myPeer.call(userId, stream);
-        const video = document.createElement('video');
-        call.on('stream', (userVideoStream) => {
-            addVideoStream(video, userVideoStream);
-        });
-        call.on('close', () => {
-            video.remove();
-        });
-        peers[userId] = call;
-    };
 
-    const addVideoStream = (video, stream) => {
-        video.srcObject = stream;
-        video.addEventListener('loadedmetadata', () => {
-            video.play();
-        });
-        videoGrid.append(video);
-    };
+    //display chatbox
+    const chatbox = document.getElementById('chatbox');
+    document.getElementById('chat-btn').addEventListener('click', () => {
+        chatbox.style.display = 'flex';
+    });
+    document.getElementById('close-chatbox').addEventListener('click', () => {
+        chatbox.style.display = 'none';
+    });
 
-
-    //chatbox
+    //send messages with chatbox
     const form = document.getElementById('form');
     const input = document.getElementById('input');
     const messages = document.getElementById('messages');
