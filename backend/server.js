@@ -3,10 +3,15 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const { v4: uuidV4 } = require('uuid');
+const config = require('./config');
+const userRouter = require('./routers/userRouter');
 
 //use static content
 app.use(express.static('public')); 
 app.set('view engine', 'ejs');
+
+//use userrouter
+app.use('/', userRouter);
 
 //get index page
 app.get('/', (req, res) => {
@@ -34,7 +39,6 @@ io.on('connection', (socket) => {
 });
 
 //set up node server
-const port = 3000;
-server.listen(port, () => {
-    console.log(`server on http://localhost:${port}`);
+server.listen(config.PORT, () => {
+    console.log(`server on http://localhost:${config.PORT}`);
 });

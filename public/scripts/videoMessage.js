@@ -75,12 +75,11 @@ window.addEventListener('load', () => {
     });
 
     //send messages with chatbox
-    const form = document.getElementById('form');
+    const messageForm = document.getElementById('message-form');
     const input = document.getElementById('input');
     const messages = document.getElementById('messages');
 
-    form.addEventListener('click', (e) => {
-        e.preventDefault();
+    messageForm.addEventListener('click', () => {
         if(input.value) {
             socket.emit('message', input.value);
             input.value = '';
@@ -88,9 +87,8 @@ window.addEventListener('load', () => {
     });
 
     input.addEventListener('keyup', (e) => {
-        e.preventDefault();
         if (e.key === 'Enter') {
-            form.click();
+            messageForm.click();
         }
     });
 
