@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO</title>
+    <!-- Scripts -->
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js" defer></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/scripts/videoMessage.js" defer></script>
+    <script src="/scripts/showChatbox.js" defer></script>
+    <script> const ROOM_ID = "<%= roomId %>"; </script>
+</head>
+<body>
+    <main>
+        <section>
+            <h1>RFW Video Room</h1>
+        </section>
+        <div id="video-grid" class="video-grid"></div>
+        <div class="bottom">
+            <div id="chat-btn" class="chat-btn">
+                <i class="fa fa-comments" aria-hidden="true" title="Push to Chat"></i>
+            </div>
+        </div>
+        <section id="chatbox" class="chatbox fade-in">
+            <section class="chatbox-header">
+                <div id="close-chatbox">
+                    <i class="fa fa-window-close" aria-hidden="true"></i>
+                </div>
+                <h2>CHAT</h2>
+            </section>
+            <ul id="messages" class="messages"></ul>
+            <form id="form" class="form">
+                <textarea id="input" class="input" autocomplete="off" autofocus="off" placeholder="type..."></textarea>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
