@@ -18,4 +18,21 @@ userRouter.get(`/${config.USER_API}`, async (req, res) => {
     }
 });
 
+userRouter.post('/:room', async (req, res) => {
+    const loginUser = await User.findOne({
+        email: req.body.email,
+        password: req.body.password
+    });
+    if(!loginUser) {
+        res.status(401).send({
+            message: 'Invalid Email or Password'
+        });
+    }else {
+        res.send({
+            _id: loginUser._id,
+            email: loginUser.email
+        });
+    }
+});
+
 module.exports = userRouter;

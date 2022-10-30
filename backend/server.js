@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -6,9 +7,21 @@ const { v4: uuidV4 } = require('uuid');
 const config = require('./config');
 const userRouter = require('./routers/userRouter');
 
+mongoose.connect(config.MONGODB_URL,
+    {   useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(() => {
+        console.log('connected to mongodb');
+    }).catch((error) => {
+        console.log(error.reason);
+    });
+
 //use static content
 app.use(express.static('public')); 
 app.set('view engine', 'ejs');
+
+app.use(express.urlencoded({ extended: false })); //recognize request objects as strings or arrays
+app.use(express.json()); //read request's body section
 
 //use userrouter
 app.use('/', userRouter);

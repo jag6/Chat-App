@@ -11,15 +11,29 @@
     <!-- Title -->
     <title>Random Forest Web - Video Room</title>
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js" integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js" defer></script>
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="/scripts/videoMessage.js" defer></script>
     <script> const ROOM_ID = "<%= roomId %>"; </script>
 </head>
 <body>
+    <div id="message-overlay" class="message-overlay"></div>
     <main>
         <section>
             <h1>Random Forest Web - Video Room</h1>
+        </section>
+        <section id="login-form-container" class="login-form-container">
+            <section>
+                <h2>Login</h2>
+            </section>
+            <form id="login-form" class="login-form">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <button type="submit" class="primary">SUBMIT</button>
+            </form>
         </section>
         <div id="video-grid" class="video-grid"></div>
         <section id="chatbox" class="chatbox fade-in">
