@@ -1,5 +1,4 @@
-# Chat-App
-Messaging and Video Web App
+# Video-Conferencing-App
 
 This is a simple video conferencing web application with additional text-message functionality. 
 
